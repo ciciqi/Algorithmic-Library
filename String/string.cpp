@@ -1,8 +1,7 @@
+#include <cstring>
 #include <iostream>
 #include <string>
-#include <cstring>
 using namespace std;
-
 
 /*
  * AC自动机
@@ -15,9 +14,7 @@ struct Node {
     int fail = 0;
     int id = -1;
     int len = 0;
-    int& operator[](size_t i) {
-        return nxt[i];
-    }
+    int& operator[](size_t i) { return nxt[i]; }
 };
 
 struct AC {
@@ -27,7 +24,7 @@ struct AC {
 
     void insert(const string& s, int id) {
         int u = 0;
-        for (char c: s) {
+        for (char c : s) {
             int nxt = c - 'a';
             if (nodes[u][nxt] == 0) {
                 nodes[u][nxt] = size++;
@@ -74,6 +71,4 @@ struct AC {
     }
 };
 
-int main() {
-	return 0;
-}
+int main() { return 0; }

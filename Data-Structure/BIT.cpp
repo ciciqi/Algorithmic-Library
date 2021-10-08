@@ -2,10 +2,10 @@
  * 支持区间修改，单点查询
  * 支持单点修改，区间查询
  */
-struct BIT: vector<LL> {
-    BIT(int n): vector<LL>(n + 1) {}
+struct BIT : vector<LL> {
+    BIT(int n) : vector<LL>(n + 1) {}
 
-	BIT(const vector<int>& nums): vector<LL>(nums.begin(), nums.end()) {
+    BIT(const vector<int>& nums) : vector<LL>(nums.begin(), nums.end()) {
         for (int i = 1; i < size(); ++i) {
             int parent = i + (i & -i);
             if (parent < size()) {
@@ -55,27 +55,25 @@ struct Data {
     }
 };
 
-struct BIT: vector<Data> {
-    inline int lsb(int x) {
-        return x & -x;
-    }
-    
-    BIT(const vector<LL>& nums): vector<Data>(nums.size()) {
+struct BIT : vector<Data> {
+    inline int lsb(int x) { return x & -x; }
+
+    BIT(const vector<LL>& nums) : vector<Data>(nums.size()) {
         for (int i = 1; i < size(); ++i) {
-            at(i) += Data{ nums[i], i * nums[i] };
+            at(i) += Data{nums[i], i * nums[i]};
             int parent = i + lsb(i);
             if (parent >= size()) continue;
             at(parent) += at(i);
         }
     }
-    
+
     void update(int x, LL delta) {
-        Data add{ delta, x * delta };
+        Data add{delta, x * delta};
         for (int i = x; i < size(); i += lsb(i)) {
             at(i) += add;
         }
     }
-    
+
     LL query(int x) {
         Data ret;
         for (int i = x; i; i -= lsb(i)) {
@@ -84,7 +82,6 @@ struct BIT: vector<Data> {
         return (x + 1) * ret.s - ret.sx;
     }
 };
-
 
 /*
  * 支持二维区间修改，区间查询
@@ -101,18 +98,18 @@ struct Data {
     }
 };
 
-struct BIT: vector<vector<Data>> {
-    BIT(int n, int m): vector<vector<Data>>(n + 1, vector<Data>(m + 1)) {}
-    
+struct BIT : vector<vector<Data>> {
+    BIT(int n, int m) : vector<vector<Data>>(n + 1, vector<Data>(m + 1)) {}
+
     void update(int x, int y, LL delta) {
-        Data data = { delta, x * delta, y * delta, x * y * delta };
+        Data data = {delta, x * delta, y * delta, x * y * delta};
         for (int i = x; i < size(); i += i & -i) {
             for (int j = y; j < at(i).size(); j += j & -j) {
                 at(i)[j] += data;
             }
         }
     }
-    
+
     LL query(int x, int y) {
         Data data;
         for (int i = x; i; i -= i & -i) {
@@ -120,7 +117,7 @@ struct BIT: vector<vector<Data>> {
                 data += at(i)[j];
             }
         }
-        return (x + 1) * (y + 1) * data.s - (y + 1) * data.sx - (x + 1) * data.sy +
-            data.sxy;
+        return (x + 1) * (y + 1) * data.s - (y + 1) * data.sx -
+               (x + 1) * data.sy + data.sxy;
     }
 };

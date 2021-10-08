@@ -2,13 +2,11 @@ struct Union {
     vector<int> fa, size;
     int n, cnt;
 
-    Union(int _n): n(_n), fa(_n), size(_n, 1), cnt(_n) {
+    Union(int _n) : n(_n), fa(_n), size(_n, 1), cnt(_n) {
         iota(fa.begin(), fa.end(), 0);
     }
 
-    int find(int x) {
-        return fa[x] == x ? x : fa[x] = find(fa[x]);
-    }
+    int find(int x) { return fa[x] == x ? x : fa[x] = find(fa[x]); }
 
     bool unite(int x, int y) {
         x = find(x);
@@ -21,7 +19,5 @@ struct Union {
         return true;
     }
 
-    bool connected(int x, int y) {
-        return find(x) == find(y);
-    }
+    bool connected(int x, int y) { return find(x) == find(y); }
 };

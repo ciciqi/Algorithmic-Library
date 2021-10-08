@@ -145,7 +145,7 @@ int gospersHack(int x, int n) {
 
 /* From highest to lowest */
 int reverseGospersHack(int x) {
-	x = ~x;
+    x = ~x;
     int lo = x & -x;
     int hi = x + lo;
     if (hi == 0) return -1;

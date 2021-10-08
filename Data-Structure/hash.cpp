@@ -12,13 +12,14 @@ struct RabinKarp {
     int mod;
     int base;
 
-    RabinKarp(pair<int, int> range = {1e6, 1e7}, int _mod = 1e9 + 7) : mod(_mod) {
+    RabinKarp(pair<int, int> range = {1e6, 1e7}, int _mod = 1e9 + 7)
+        : mod(_mod) {
         mt19937 gen(random_device{}());
         auto dis = uniform_int_distribution<int>(range.first, range.second);
         base = dis(gen);
     }
 
-	template <class T>
+    template <class T>
     vector<int> getHash(const T& seq, int len) {
         const int n = seq.size();
         if (len > n) return {};
@@ -32,15 +33,17 @@ struct RabinKarp {
         }
         ret.push_back(hash);
         for (int i = len; i < n; ++i) {
-            hash = ((LL)hash * base % mod - (LL)seq[i - len] * mul % mod + seq[i]) % mod;
-			if (hash < 0) hash += mod;
+            hash = ((LL)hash * base % mod - (LL)seq[i - len] * mul % mod +
+                    seq[i]) %
+                   mod;
+            if (hash < 0) hash += mod;
             ret.push_back(hash);
         }
         return move(ret);
     }
 };
 
-/* 
+/*
  * Rabin-Karp algorithm template v2
  */
 struct SeqHash {
@@ -48,9 +51,9 @@ struct SeqHash {
     LL base, mod;
     vector<LL> hash, power;
 
-    SeqHash(LL _base = 100007, LL _mod = 1e9 + 7): base(_base), mod(_mod) {}
+    SeqHash(LL _base = 100007, LL _mod = 1e9 + 7) : base(_base), mod(_mod) {}
 
-    template<class T>
+    template <class T>
     void build(const T& seq, int n) {
         hash = {0};
         power = {1};
@@ -61,7 +64,9 @@ struct SeqHash {
     }
 
     LL ask(int left, int right) {
-        return (hash[right + 1] - hash[left] * power[right + 1 - left] % mod + mod) % mod;
+        return (hash[right + 1] - hash[left] * power[right + 1 - left] % mod +
+                mod) %
+               mod;
     }
 };
 

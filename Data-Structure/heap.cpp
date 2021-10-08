@@ -1,31 +1,24 @@
-template<typename T>
+template <typename T>
 struct Greater {
-    bool operator()(const T& a, const T& b) {
-        return a > b;
-    }
+    bool operator()(const T& a, const T& b) { return a > b; }
 };
 
-template<typename T, typename Cmp>
+template <typename T, typename Cmp>
 class Heap {
-private:
+   private:
     vector<T> arr;
     int size;
     Cmp cmp;
 
-    inline int getLeft(int x) {
-        return x << 1;
-    }
+    inline int getLeft(int x) { return x << 1; }
 
-    inline int getRight(int x) {
-        return (x << 1) + 1;
-    }
+    inline int getRight(int x) { return (x << 1) + 1; }
 
-    inline int getParent(int x) {
-        return x >> 1;
-    }
+    inline int getParent(int x) { return x >> 1; }
 
     void up(int x) {
-        for (int fa = getParent(x); fa > 0 && cmp(arr[fa], arr[x]); fa = getParent(x)) {
+        for (int fa = getParent(x); fa > 0 && cmp(arr[fa], arr[x]);
+             fa = getParent(x)) {
             swap(arr[fa], arr[x]);
             x = fa;
         }
@@ -44,8 +37,8 @@ private:
         }
     }
 
-public:
-    Heap(int n): size(0) {
+   public:
+    Heap(int n) : size(0) {
         arr.reserve(n);
         arr.resize(1);
     }
@@ -63,11 +56,7 @@ public:
         down(1);
     }
 
-    const T& top() {
-        return arr[1];
-    }
+    const T& top() { return arr[1]; }
 
-    bool empty() {
-        return size == 0;
-    }
+    bool empty() { return size == 0; }
 };
